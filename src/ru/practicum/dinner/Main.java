@@ -1,5 +1,7 @@
 package ru.practicum.dinner;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,9 +9,11 @@ public class Main {
     static DinnerConstructor dc;
     static Scanner scanner;
 
+
     public static void main(String[] args) {
         dc = new DinnerConstructor();
         scanner = new Scanner(System.in);
+
 
         while (true) {
             printMenu();
@@ -41,14 +45,29 @@ public class Main {
         System.out.println("Введите название блюда:");
         String dishName = scanner.nextLine();
 
+        dc.addNewDish(dishType, dishName);
         // добавьте новое блюдо
     }
 
     private static void generateDishCombo() {
+        ArrayList<String > dishesType = new ArrayList<>();
         System.out.println("Начинаем конструировать обед...");
 
         System.out.println("Введите количество наборов, которые нужно сгенерировать:");
-        int numberOfCombos = scanner.nextInt();
+        int numberOfCombos;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                numberOfCombos = scanner.nextInt();
+                if (numberOfCombos  > 0)
+                    break;
+                System.out.println("Введите положительное целое число больше нуля");
+                scanner.nextLine();
+
+            }else {
+                System.out.println("Введите положительное целое число.");
+                scanner.nextLine();
+            }
+        }
         scanner.nextLine();
 
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
@@ -57,8 +76,16 @@ public class Main {
         //реализуйте ввод типов блюд
         while (!nextItem.isEmpty()) {
 
+            if (dc.checkType(nextItem))
+                dishesType.add(nextItem);
+            nextItem = scanner.nextLine();
         }
 
+        if (dishesType.isEmpty()){
+            System.out.println("Список тип блюд пустой.");
+            return;
+        }
+        dc.generateCombination(dishesType, numberOfCombos);
         // сгенерируйте комбинации блюд и выведите на экран
 
     }
