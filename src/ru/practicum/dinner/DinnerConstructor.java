@@ -10,13 +10,7 @@ public class DinnerConstructor {
     Random random;
 
     public DinnerConstructor() {
-        this.menu = new HashMap<>()
-        {{
-            // если хотите дефолтный Мапу раскоментируйте
-//            put("Первое", new ArrayList<>(Arrays.asList("Борщ", "Куриный суп", "Харчо")));
-//            put("Второе", new ArrayList<>(Arrays.asList("Котлеты с пюре", "Рыба с рисом", "Куринная печень с булгуром")));
-//            put("Третье", new ArrayList<>(Arrays.asList("Чай", "Кофе", "Морс")));
-        }};
+        this.menu = new HashMap<>();
         random = new Random();
     }
 
@@ -43,10 +37,11 @@ public class DinnerConstructor {
     public void printTypeMenu(){
         boolean toggle = true;
         for (String type : menu.keySet()) {
-            if (toggle)
+            if (toggle) {
                 System.out.print(type + " ".repeat(8));
-            else
+            }else {
                 System.out.println(type);
+            }
             toggle= !toggle;
         }
         if (!toggle)
